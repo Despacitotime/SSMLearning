@@ -5,7 +5,7 @@
 <!--configuration代表核心配置文件-->
 <configuration>
     <!--通过properties来实现引用配置文件，注意resource对应的文件夹要自己手动创建-->
-    <properties resource="org/mybatis/example/config.properties">
+    <properties resource="config.properties">
         <property name="username" value="dev_user"/>
         <property name="password" value="F2Fa3!33TYyg"/>
     </properties>
@@ -50,6 +50,8 @@
         <typeAlias type="BasicSQL.com.wq.pojo.User" alias="User"/>
         <!--方法二：统一指定，为Bean本来的名称，但首字母小写（其实大写也可以）-->
         <package name="BasicSQL.wq.pojo"/>
+        <package name="ComplexSQL.com.wq.oneToMany.pojo"/>
+        <package name="ComplexSQL.com.wq.severalForOne.pojo"/>
         <!--方法三：直接给对应实体类加注解（见User类中的示范）-->
     </typeAliases>
 
@@ -77,7 +79,7 @@
                 <!--如果MYSQL为5.7的，用com.mysql.jdbc.Driver-->
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
                 <!--如果MYSQL为5.7的，用jdbc:mysql://localhost:3306/mybatis?useSSL=true&amp;useUnicode=true&amp;characterEncoding=UTF-8-->
-                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?userSSL=false&amp;serverTimezone=GMT%2B8"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/qsmas?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf-8"/>
 <!--                <property name="username" value="${username}"/>-->
 <!--                <property name="password" value="${password}"/>-->
                 <property name="username" value="root"/>
@@ -103,10 +105,11 @@
 
     <!-- 使用相对于类路径的资源引用 -->
     <mappers>
-        <mapper resource="com/wq/Dao/UserMapper.xml"/>
+        <mapper resource="BasicSQL/com/wq/Dao/UserMapper.xml"/>
         <!--注解在接口上实现，需要在核心配置文件中绑定接口，即在mybatis-config.xml文件中加上如下语句:-->
-        <mapper class="BasicSQL.com.wq.Dao.UserMapper"/>
-        <mapper class="ComplexSQL.com.wq.severalForOne.dao.StudentMapper"/>
-        <mapper class="ComplexSQL.com.wq.Dao.TeacherMapper"/>
+<!--        <mapper class="BasicSQL.com.wq.Dao.UserMapper"/>-->
+        <!--上面两个只要写一个就可以了，不要重复绑定-->
+        <mapper class="ComplexSQL.com.wq.oneToMany.dao.TeacherMapperO"/>
+        <mapper class="ComplexSQL.com.wq.severalForOne.dao.TeacherMapperS"/>
     </mappers>
 </configuration>

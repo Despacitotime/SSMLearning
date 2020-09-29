@@ -83,7 +83,7 @@ public interface UserMapper {
      * @param name
      * @return User*/
     @Select("select * from user where id=#{id} and name=#{name} ")
-    User getUserById(@Param("id") int id,@Param("name") String name);
+    User getUserByIds(@Param("id") int id,@Param("name") String name);
 
     /**注解版添加用户
      * values (#{id},#{name},#{password})语句中的属性名必须和实体类中的一致

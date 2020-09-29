@@ -20,7 +20,7 @@
     <!--查询语句,id为接口中对应的方法,resultType为返回值类型-->
     <!--返回值为List列表，resultType使用列表中存储的数据的类型-->
     <select id="getUserList" resultType="BasicSQL.com.wq.pojo.User">
-        select * from mybaties.user;
+        select * from mybatis.user;
     </select>
 
     <!--#{}与${}区别：-->
@@ -35,7 +35,7 @@
     <!--快捷键 sel+回车-->
     <!--id=#{id}表示接受方法中传来的参数，#{}中的id即参数的名称-->
     <select id="getUserById" resultType="BasicSQL.com.wq.pojo.User" parameterType="int">
-        select * from mybaties.user where id=#{id};
+        select * from mybatis.user where id=#{id};
     </select>
 
     <!--insert一个用户-->
@@ -74,7 +74,7 @@
     </select>
 
     <!--分页-->
-    <select id="getUserByLimit" parameterType="map" resultType="UserMap">
+    <select id="getUserByLimit" parameterType="map" resultMap="UserMap">
         select * from mybatis.user limit #{startNum},#{Size};
     </select>
 

@@ -16,7 +16,7 @@ public class ComplexTest {
     public void test(){
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         TeacherMapperO mapper = sqlSession.getMapper(TeacherMapperO.class);
-        TeacherO teacher = mapper.getTeacher1(1);
+        TeacherO teacher = mapper.getTeacherO1(1);
         System.out.println(teacher);
     }
 
@@ -24,7 +24,7 @@ public class ComplexTest {
     public void test1(){
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         TeacherMapperS mapper = sqlSession.getMapper(TeacherMapperS.class);
-        TeacherS teacher = mapper.getTeacher(1);
+        TeacherS teacher = mapper.getTeacherS(1);
         System.out.println(teacher);
         sqlSession.close();
     }

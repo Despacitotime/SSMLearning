@@ -31,12 +31,12 @@ public class UserDaoTest {
                 System.out.println(user);
             }
             //2.根据方法的返回值类型来选择，如返回为List，就有selectList
-            List<User> object = sqlSession.selectList("com.wq.Dao.UserMapper.getUserList");//返回object，强转为User
+            /*List<User> object = sqlSession.selectList("com.wq.Dao.UserMapper.getUserList");//返回object，强转为User*/
         }catch (Exception e){
             e.printStackTrace();
         }finally {
             //关闭SqlSession
-            sqlSession.close();
+//            sqlSession.close();
         }
     }
 
@@ -269,7 +269,7 @@ public class UserDaoTest {
 
     /**注解版删除用户*/
     @Test
-    public void test5(){
+    public void testNote5(){
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         /*底层主要应用反射*/
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
