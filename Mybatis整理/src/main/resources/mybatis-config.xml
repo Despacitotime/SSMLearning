@@ -13,7 +13,7 @@
                 <!--如果MYSQL为5.7的，用com.mysql.jdbc.Driver-->
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
                 <!--如果MYSQL为5.7的，用jdbc:mysql://localhost:3306/mybatis?useSSL=true&amp;useUnicode=true&amp;characterEncoding=UTF-8-->
-                <property name="url" value="jdbc:mysql://47.115.190.1:3306/qsmas?userSSL=false&amp;serverTimezone=GMT%2B8"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?userSSL=false&amp;serverTimezone=GMT%2B8"/>
 <!--                <property name="username" value="${username}"/>-->
 <!--                <property name="password" value="${password}"/>-->
                 <property name="username" value="root"/>
@@ -22,6 +22,7 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="org/mybatis/example/BlogMapper.xml"/>
+        <!--配置mapper读取路径-->
+        <mapper resource="com/wq/Dao/UserMapper.xml"/>
     </mappers>
 </configuration>
