@@ -4,10 +4,74 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <!--configuration代表核心配置文件-->
 <configuration>
+    <!--通过properties来实现引用配置文件，注意resource对应的文件夹要自己手动创建-->
+    <properties resource="org/mybatis/example/config.properties">
+        <property name="username" value="dev_user"/>
+        <property name="password" value="F2Fa3!33TYyg"/>
+    </properties>
+
+    <!--settings（设置）：这是 MyBatis 中极为重要的调整设置，它们会改变 MyBatis 的运行时行为。-->
+    <!--一个配置完整的 settings 元素的示例如下：-->
+    <settings>
+        <!--全局性的开启或关闭所有映射器配置文件中已配置的任何缓存-->
+        <setting name="cacheEnabled" value="true"/>
+        <!--延迟加载的全局开关，开启时所有关联对象都会延迟加载。特定关联对象可通过设置fetchType属性来覆盖该项的开关状态-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="multipleResultSetsEnabled" value="true"/>
+        <setting name="useColumnLabel" value="true"/>
+        <!--允许JDBC支持自动生成主键，需要数据库驱动使用。如果设置为true，将强制使用自动生成主键。尽管一些数据库驱动不支持
+        此特性，但仍然可正常工作。（如Derby）-->
+        <setting name="useGeneratedKeys" value="false"/>
+        <!--针对数据库操作出现异常时的排错，日志就是最好的助手，STDOUT_LOGGING为标准日志输出-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!--通过使用Log4j：可以控制日志信息输送的目的地是控制台、文件、GUI组件，甚至是套接口服务器、NT的事件记录器、UNIX Syslog
+        守护进程等；可以控制每一条日志的输出格式；通过定义每一条日志信息的级别，能够更加细致地控制日志的生成过程；可以通过一个配置
+        文件来灵活地进行配置，而不需要修改应用的代码。-->
+<!--        <setting name="logImpl" value="LOG4J"/>-->
+        <setting name="autoMappingBehavior" value="PARTIAL"/>
+        <setting name="autoMappingUnknownColumnBehavior" value="WARNING"/>
+        <setting name="defaultExecutorType" value="SIMPLE"/>
+        <setting name="defaultStatementTimeout" value="25"/>
+        <setting name="defaultFetchSize" value="100"/>
+        <setting name="safeRowBoundsEnabled" value="false"/>
+        <!--是否开启驼峰命名自动映射，即从经典数据库列名A_COLUMN映射到经典Java属性名aColumn-->
+        <setting name="mapUnderscoreToCamelCase" value="false"/>
+        <setting name="localCacheScope" value="SESSION"/>
+        <setting name="jdbcTypeForNull" value="OTHER"/>
+        <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/>
+    </settings>
+
+    <!--typeAliases（类型别名）：类型别名可为 Java 类型设置一个缩写名字。 它仅用于 XML 配置，意在降低冗余的全限定类名书写。
+    全限定类名，例如resultType="com.wq.pojo.User"-->
+    <!--可以指定一个包名，MyBatis 会在包名下面搜索需要的 Java Bean，每一个在包 domain.blog 中的 Java Bean，在没有注解
+    的情况下，会使用 Bean 的首字母小写的非限定类名来作为它的别名。（注意：实际上大写也可以跑出来）-->
+    <typeAliases>
+        <!--方法一：手动指定别名-->
+        <typeAlias type="com.wq.pojo.User" alias="User"/>
+        <!--方法二：统一指定，为Bean本来的名称，但首字母小写（其实大写也可以）-->
+        <package name="com.wq.pojo"/>
+        <!--方法三：直接给对应实体类加注解（见User类中的示范）-->
+    </typeAliases>
+
+    <!--environments（环境配置）：MyBatis 可以配置成适应多种环境，这种机制有助于将 SQL 映射应用于多种数据库之中，
+    现实情况下有多种理由需要这么做。例如，开发、测试和生产环境需要有不同的配置；或者想在具有相同 Schema 的多个生产
+    数据库中使用相同的 SQL 映射。还有许多类似的使用场景。
+    不过要记住：尽管可以配置多个环境，但每个 SqlSessionFactory 实例只能选择一种环境。-->
     <environments default="development">
         <environment id="development">
+            <!--transactionManager（事务管理器：在 MyBatis 中有两种类型的事务管理器（也就是 type="[JDBC|MANAGED]"））
+            JDBC – 这个配置直接使用了 JDBC 的提交和回滚设施，它依赖从数据源获得的连接来管理事务作用域。
+            MANAGED – 这个配置不提交或回滚一个连接，而是让容器来管理事务的整个生命周期（比如 JEE 应用服务器的上下文）。
+            默认情况下它会关闭连接，但一些容器并不希望连接被关闭，因此需要将 closeConnection 属性设置为 false 来阻止默认的关闭行为。
+            注意：如果你正在使用 Spring + MyBatis，则没有必要配置事务管理器，因为 Spring 模块会使用自带的管理器来覆盖前面的配置。-->
             <transactionManager type="JDBC"/>
             <!--基本的数据库配置，从指定文件中读取对应的字段；也可以直接填上固定的配置-->
+            <!--dataSource（数据源）元素使用标准的 JDBC 数据源接口来配置 JDBC 连接对象的资源，有三种内建的数据源类型（也就是
+            type="[UNPOOLED|POOLED|JNDI]"）。Mybaties的默认事务管理器为jdbc，默认的的数据源为pooled。
+            UNPOOLED– 这个数据源的实现会每次请求时打开和关闭连接。
+            POOLED– 这种数据源的实现利用“池(用完回收)”的概念将 JDBC 连接对象组织起来，避免了创建新的连接实例时所必需的初始化和认证时间。
+            能使并发 Web 应用快速响应请求。
+            JNDI – 主要是为能在如 EJB 或应用服务器这类容器中使用，容器可以集中或在外部配置数据源，然后放置一个 JNDI 上下文的数据源引用-->
             <dataSource type="POOLED">
                 <!--自用MYSQL为8.0版本-->
                 <!--如果MYSQL为5.7的，用com.mysql.jdbc.Driver-->
@@ -21,8 +85,26 @@
             </dataSource>
         </environment>
     </environments>
+
+    <!--mappers(映射器)-->
+    <!--配置mapper读取路径,在自动查找资源方面，Java 并没有提供一个很好的解决方案，所以最好的办法是直接告诉
+        MyBatis 到哪里去找映射文件。 你可以使用相对于类路径的资源引用，或完全限定资源定位符（包括 file:///(这种不用)形式的 URL），
+        或类名和包名等。例如：-->
+    <!-- 使用映射器接口实现类的完全限定类名 -->
+<!--    <mappers>-->
+<!--        <mapper class="org.mybatis.builder.AuthorMapper"/>-->
+<!--    </mappers>-->
+
+    <!-- 将包内的映射器接口实现全部注册为映射器 -->
+<!--    <mappers>-->
+<!--        <package name="org.mybatis.builder"/>-->
+<!--    </mappers>-->
+    <!--注意：使用时接口和它的配置文件必须同名，且接口和它的配置文件在同一个包下。-->
+
+    <!-- 使用相对于类路径的资源引用 -->
     <mappers>
-        <!--配置mapper读取路径-->
         <mapper resource="com/wq/Dao/UserMapper.xml"/>
+        <!--注解在接口上实现，需要在核心配置文件中绑定接口，即在mybatis-config.xml文件中加上如下语句:-->
+        <mapper class="com.wq.Dao.UserMapper"/>
     </mappers>
 </configuration>

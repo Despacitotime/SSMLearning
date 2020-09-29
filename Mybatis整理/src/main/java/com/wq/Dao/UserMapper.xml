@@ -4,6 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace=绑定那个一个对应的Dao/Mapper接口-->
 <mapper namespace="com.wq.Dao.UserMapper">
+    <!--解决属性名和字段名不一致的问题-->
+    <!--方法一：通过结果集映射-->
+    <resultMap id="UserMap" type="User">
+        <!--column为数据库中的字段，property为实体类中的属性-->
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="pwd" property="password"/>
+    </resultMap>
+    <!--方法二：给属性名起别名，别名为字段名-->
+<!--    <select id="getUserById" resultType="user" parameterType="int">-->
+<!--        select id,name,pwd as password from mybatis.user where id=#{id};-->
+<!--    </select>-->
+
     <!--查询语句,id为接口中对应的方法,resultType为返回值类型-->
     <!--返回值为List列表，resultType使用列表中存储的数据的类型-->
     <select id="getUserList" resultType="com.wq.pojo.User">
@@ -34,6 +47,10 @@
     </delete>
 
     <!--使用Map查询User-->
+    <!--下为简单映射语句的示例，它们没有显式指定 resultMap，只是简单地将所有的列映射到 HashMap 的键上，这由 resultType
+     属性指定。但是 HashMap 并不是一个很好的领域模型，你的程序更可能会使用 JavaBean 或 POJO（Plain Old Java Objects，
+     普通老式 Java 对象）作为领域模型。MyBatis 对两者都提供了支持，并且再没有显示配置resultMap时，MyBatis会在幕后创建
+     一个resultMap来映射，此时存在属性名和别名对应不上的冲突（默认是必须一致的）-->
     <select id="getUserById2" parameterType="map" resultType="com.wq.pojo.User">
         select * from mybatis.user where id=#{ids};
     </select>
@@ -46,6 +63,16 @@
     <!--防止SQL注入的模糊查询-->
     <select id="getUserLike2" parameterType="String" resultType="com.wq.pojo.User">
         select * from mybatis.user where name like "%"#{name}"%";
+    </select>
+
+    <!--分页-->
+    <select id="getUserByLimit" parameterType="map" resultType="UserMap">
+        select * from mybatis.user limit #{startNum},#{Size};
+    </select>
+
+    <!--RowBounds实现分页-->
+    <select id="getUserByRowBounds" resultMap="UserMap">
+        select * from mybatis.user;
     </select>
 </mapper>
 

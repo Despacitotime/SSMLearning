@@ -1,5 +1,8 @@
 package com.wq.Dao;
 import com.wq.pojo.User;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
 import java.util.List;
 import java.util.Map;
 
@@ -49,4 +52,20 @@ public interface UserMapper {
      * @param name
      * @return List<User>*/
     List<User> getUserLike2(String name);
+
+    /**分页
+     * @param map
+     * @return List<User>*/
+    List<User> getUserByLimit(Map<String,Integer> map);
+
+    /**RowBounds实现分页
+     * @return List<User>*/
+    List<User> getUserByRowBounds();
+
+    /**使用注解写SQL语句
+     * 使用注解来映射简单语句会使代码显得更加简洁，但对于复杂语句建议使用.xml来配置
+     * @param id
+     * @return User*/
+    @Select("select * from mybatis.user where id=#{id};")
+    User selectById(@Param("id")int id);
 }

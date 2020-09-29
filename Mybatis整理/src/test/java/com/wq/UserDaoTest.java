@@ -2,14 +2,19 @@ package com.wq;
 import com.wq.Dao.UserMapper;
 import com.wq.pojo.User;
 import com.wq.utils.MybatisUtils;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
-
+/**注意点：可能IDE自动导错了包导致出错 import java.util.logging.Logger;
+ * 应该导入apache的Logger包*/
+import org.apache.log4j.Logger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class UserDaoTest {
+    /*读取配置文件*/
+    static Logger logger = Logger.getLogger("com.wq.UserDaoTest");
     @Test
     public void test(){
         SqlSession sqlSession = null;
@@ -150,4 +155,63 @@ public class UserDaoTest {
             sqlSession.close();
         }
     }
+
+    /**测试log4j：其中：info、debug和error为日志级别*/
+    @Test
+    public void testLog4j(){
+        /*getLogger中传入使用当前Log4j的class对象*/
+        /*相当于System.out.println();*/
+        logger.info("info:进入了testLog4j");
+        logger.debug("debug:进入了testLog4j");
+        logger.error("error:进入了testLog4j");
+    }
+
+    /**使用limit实现分页*/
+    @Test
+    public void testLimit(){
+        SqlSession sqlSession = null;
+        try{
+            sqlSession = MybatisUtils.getSqlSession();
+            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+            HashMap map = new HashMap<String,Integer>();
+            map.put("startNum",0);
+            map.put("Size",2);
+            List<User> userList = userMapper.getUserByLimit(map);
+            for (User user : userList) {
+                System.out.println(user);
+            }
+        }catch (Exception e){
+
+        }finally {
+            //关闭SqlSession
+            sqlSession.close();
+        }
+    }
+
+    /**RowBounds实现分页*/
+    @Test
+    public void testRowBounds(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        /*RowBounds实现*/
+        RowBounds rowBounds = new RowBounds(1, 2);
+        /*通过java代码层面实现分页*/
+        List<User> userList = sqlSession.selectList("com.wq.Dao.UserDao.getUserByRowBounds",null,rowBounds);
+        for (User user : userList) {
+            System.out.println(user);
+        }
+    }
+
+    /**使用注解写SQL语句*
+     * 注解的本质是反射机制实现，底层是动态代理。客户端不知道底层实现，只访问接口；底层由代理对象帮助客户进行接口和真实对象的访问，
+     * 从而完成目标的功能，此即动态代理。
+     */
+    @Test
+    public void tests(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User user = userMapper.selectById(1);
+        System.out.println(user);
+        sqlSession.close();
+    }
 }
+

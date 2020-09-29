@@ -16,7 +16,14 @@ public class MybatisUtils {
      * 实例构建出，即对应我们的mybatis-config.xml文件中的配置。每一个MyBatis的应用程序都以一个SqlSessionFactory对象的实例为核心
      * SqlSessionFactory线程安全，一旦被创建，则在应用执行期间都存在，建议在应用运行期间不要重复创建多次（此处可用工具类来定义，观察
      * 可发现，在工具类中它相当于单例模式的那个单例），SqlSessionFactory是创建SqlSession的工厂*/
+    /**为了指定创建哪种环境，只要将它作为可选的参数传递给 SqlSessionFactoryBuilder 即可。可以接受环境配置的两个方法签名是：
+     * SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environment);
+     * SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environment, properties);
+     * 如果忽略了环境参数，那么将会加载默认环境，如下所示：
+     * SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader);
+     * SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, properties);*/
     private static SqlSessionFactory sqlSessionFactory;
+
     /**静态代码块，只要创建该类的实例必然会运行该部分*/
     static {
         try {
