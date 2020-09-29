@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--configuration代表核心配置文件-->
+<mapper namespace="com.wq.Dao.TeacherMapperS">
+    <select id="getStudent1" resultMap="StudentTeacher">
+          select * from student;
+    </select>
+    <resultMap id="StudentTeacher" type="StudentS">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <!--复杂的属性需要单独处理,是一个对象就用association;集合就用collection
+        association(嵌套结果映射) – 一个复杂类型的关联,许多结果将包装成这种类型，关联可以是 resultMap 元素，
+        或是对其它结果映射的引用-->
+        <association property="teacher" column="tid" javaType="TeacherS" select="getTeacher"/>
+        <!--<collection property=""/>-->
+    </resultMap>
+    <select id="getTeacher" resultType="TeacherS">
+          select * from teacher where id=#{id};
+    </select>
+
+    <select id="getStudent2" resultMap="StudentTeacher">
+          select s.id sid,s.name sname,t.name tname from student s,teacher t where s.tid = t.id;
+    </select>
+    <resultMap id="StudentTeacher" type="StudentS">
+        <!--由于起了别名，此处必须用别名来对应-->
+        <result property="id" column="sid"/>
+        <result property="name" column="sname"/>
+        <association property="teacher" javaType="TeacherS">
+            <result property="name" column="tname"/>
+        </association>
+    </resultMap>
+
+</mapper>

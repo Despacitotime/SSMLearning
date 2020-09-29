@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--configuration代表核心配置文件-->
+<mapper namespace="com.wq.Dao.TeacherMapperO">
+    <select id="getTeacher1" resultMap="TeacherStudent">
+        select s.id sid,s.name sname,t.name tname,t.id tid
+        from student s,teacher t
+        where s.tid = t.id and t.id = #{tid}
+    </select>
+    <resultMap id="TeacherStudent" type="TeacherO">
+        <result property="id" column="tid"/>
+        <result property="name" column="tname"/>
+        <!--javaType=""为指定属性的类型，本案例中的属性是List，不是规范的属性，集合中的泛型信息使用ofType获取-->
+        <collection property="students" ofType="StudentO">
+            <result property="id" column="sid"/>
+            <result property="name" column="sname"/>
+            <result property="tid" column="tid"/>
+        </collection>
+    </resultMap>
+
+    <select id="getTeacher2" resultMap="TeacherStudent">
+        select id,name from teacher where id=#{tid};
+    </select>
+    <resultMap id="TeacherStudent" type="TeacherO">
+        <!--此处传送老师里面的id给子查询-->
+        <!--javaType是用来指定实体类中属性的类型；ofType用来指定映射到List或者集合中的pojo类型-->
+        <!--collection(嵌套结果映射) – 一个复杂类型的集合,集合可以是 resultMap 元素，或是对其它结果映射的引用-->
+        <collection property="students" column="id" javaType="ArrayList" ofType="StudentO" select="getStudent"/>
+    </resultMap>
+    <select id="getStudent" resultType="StudentO">
+        select * from student where tid=#{tid};
+    </select>
+
+</mapper>

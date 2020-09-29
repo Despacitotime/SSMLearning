@@ -106,5 +106,7 @@
         <mapper resource="com/wq/Dao/UserMapper.xml"/>
         <!--注解在接口上实现，需要在核心配置文件中绑定接口，即在mybatis-config.xml文件中加上如下语句:-->
         <mapper class="BasicSQL.com.wq.Dao.UserMapper"/>
+        <mapper class="ComplexSQL.com.wq.severalForOne.dao.StudentMapper"/>
+        <mapper class="ComplexSQL.com.wq.Dao.TeacherMapper"/>
     </mappers>
 </configuration>
