@@ -1,7 +1,7 @@
-package com.wq;
-import com.wq.Dao.UserMapper;
-import com.wq.pojo.User;
-import com.wq.utils.MybatisUtils;
+package BasicSQL.com.wq;
+import BasicSQL.com.wq.Dao.UserMapper;
+import BasicSQL.com.wq.pojo.User;
+import BasicSQL.com.wq.utils.MybatisUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -13,8 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 public class UserDaoTest {
-    /*读取配置文件*/
+    /**读取配置文件*/
     static Logger logger = Logger.getLogger("com.wq.UserDaoTest");
+
+    /**查询所有的User*/
     @Test
     public void test(){
         SqlSession sqlSession = null;
@@ -38,6 +40,7 @@ public class UserDaoTest {
         }
     }
 
+    /**根据ID查询用户*/
     @Test
     public void test1(){
         //获取SqlSession对象
@@ -56,6 +59,7 @@ public class UserDaoTest {
         }
     }
 
+    /**insert一个用户*/
     @Test
     public void test2() {
         SqlSession sqlSession = null;
@@ -78,6 +82,7 @@ public class UserDaoTest {
         }
     }
 
+    /**修改一个用户数据*/
     @Test
     public void test3(){
         SqlSession sqlSession = null;
@@ -97,6 +102,7 @@ public class UserDaoTest {
         }
     }
 
+    /**删除数据*/
     @Test
     public void test4(){
         SqlSession sqlSession = null;
@@ -117,6 +123,7 @@ public class UserDaoTest {
         }
     }
 
+    /**map查询，Map是一个键值对*/
     @Test
     public void test6(){
         SqlSession sqlSession = null;
@@ -135,6 +142,7 @@ public class UserDaoTest {
         }
     }
 
+    /**模糊查询-两种方式，其中一种可以预防sql注入*/
     @Test
     public void test7(){
         SqlSession sqlSession = null;
@@ -213,5 +221,61 @@ public class UserDaoTest {
         System.out.println(user);
         sqlSession.close();
     }
+
+    /**注解版查询全部用户*/
+    @Test
+    public void testNote1(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        /*底层主要应用反射*/
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        List<User> users = userMapper.getUsers();
+        for (User user : users) {
+            System.out.println(user);
+        }
+        sqlSession.close();
+    }
+
+    /**注解版根据id和name进行查询*/
+    @Test
+    public void testNote2(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        /*底层主要应用反射*/
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User user = userMapper.getUserById(1);
+        System.out.println(user);
+    }
+
+    /**注解版添加用户*/
+    @Test
+    public void testNote3(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        /*底层主要应用反射*/
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User user = new User(5,"5号","123456");
+        int i = userMapper.addUser(user);
+        System.out.println(i);
+    }
+
+    /**注解版修改用户*/
+    @Test
+    public void testNote4(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        /*底层主要应用反射*/
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User user = new User(5,"4号","123456");
+        int i = userMapper.updateUser(user);
+        System.out.println(i);
+    }
+
+    /**注解版删除用户*/
+    @Test
+    public void test5(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        /*底层主要应用反射*/
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        int i = userMapper.deleteUser(5);
+        System.out.println(i);
+    }
+
 }
 

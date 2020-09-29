@@ -47,9 +47,9 @@
     的情况下，会使用 Bean 的首字母小写的非限定类名来作为它的别名。（注意：实际上大写也可以跑出来）-->
     <typeAliases>
         <!--方法一：手动指定别名-->
-        <typeAlias type="com.wq.pojo.User" alias="User"/>
+        <typeAlias type="BasicSQL.com.wq.pojo.User" alias="User"/>
         <!--方法二：统一指定，为Bean本来的名称，但首字母小写（其实大写也可以）-->
-        <package name="com.wq.pojo"/>
+        <package name="BasicSQL.wq.pojo"/>
         <!--方法三：直接给对应实体类加注解（见User类中的示范）-->
     </typeAliases>
 
@@ -105,6 +105,6 @@
     <mappers>
         <mapper resource="com/wq/Dao/UserMapper.xml"/>
         <!--注解在接口上实现，需要在核心配置文件中绑定接口，即在mybatis-config.xml文件中加上如下语句:-->
-        <mapper class="com.wq.Dao.UserMapper"/>
+        <mapper class="BasicSQL.com.wq.Dao.UserMapper"/>
     </mappers>
 </configuration>

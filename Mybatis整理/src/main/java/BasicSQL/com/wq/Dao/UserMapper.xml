@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace=绑定那个一个对应的Dao/Mapper接口-->
-<mapper namespace="com.wq.Dao.UserMapper">
+<mapper namespace="BasicSQL.com.wq.Dao.UserMapper">
     <!--解决属性名和字段名不一致的问题-->
     <!--方法一：通过结果集映射-->
     <resultMap id="UserMap" type="User">
@@ -19,25 +19,33 @@
 
     <!--查询语句,id为接口中对应的方法,resultType为返回值类型-->
     <!--返回值为List列表，resultType使用列表中存储的数据的类型-->
-    <select id="getUserList" resultType="com.wq.pojo.User">
+    <select id="getUserList" resultType="BasicSQL.com.wq.pojo.User">
         select * from mybaties.user;
     </select>
+
+    <!--#{}与${}区别：-->
+    <!--#将传入的数据都当成一个字符串，会对自动传入的数据加一个双引号，此方法可以很大程度上防止sql注入；-->
+    <!--$将传入的数据直接显示生成在sql中，无法防止Sql注入，一般用于传入数据库对象，例如传入表名-->
+    <!--注意点：
+        	• MyBatis排序时使用order by 动态参数时需要注意，用$而不是#
+        	• 传入表名称用${}
+        	• 时间比较，需要为#{}，参数尽量用#{}，${}容易导致需要有引号的参数失效-->
 
     <!--根据ID查询用户-->
     <!--快捷键 sel+回车-->
     <!--id=#{id}表示接受方法中传来的参数，#{}中的id即参数的名称-->
-    <select id="getUserById" resultType="com.wq.pojo.User" parameterType="int">
+    <select id="getUserById" resultType="BasicSQL.com.wq.pojo.User" parameterType="int">
         select * from mybaties.user where id=#{id};
     </select>
 
     <!--insert一个用户-->
     <!--虽然传入的是一个user对象，但是对象中的属性可以直接取出来-->
-    <insert id="addUser" parameterType="com.wq.pojo.User">
+    <insert id="addUser" parameterType="BasicSQL.com.wq.pojo.User">
         insert into mybatis.user (id,name,pwd) values (#{id},#{name},#{pwd});
     </insert>
 
     <!--修改一个用户数据-->
-    <update id="updateUser" parameterType="com.wq.pojo.User">
+    <update id="updateUser" parameterType="BasicSQL.com.wq.pojo.User">
         update mybatis.user set name=#{name},pwd=#{pwd} where id=#{id};
     </update>
 
@@ -51,17 +59,17 @@
      属性指定。但是 HashMap 并不是一个很好的领域模型，你的程序更可能会使用 JavaBean 或 POJO（Plain Old Java Objects，
      普通老式 Java 对象）作为领域模型。MyBatis 对两者都提供了支持，并且再没有显示配置resultMap时，MyBatis会在幕后创建
      一个resultMap来映射，此时存在属性名和别名对应不上的冲突（默认是必须一致的）-->
-    <select id="getUserById2" parameterType="map" resultType="com.wq.pojo.User">
+    <select id="getUserById2" parameterType="map" resultType="BasicSQL.com.wq.pojo.User">
         select * from mybatis.user where id=#{ids};
     </select>
 
     <!--模糊查询-->
-    <select id="getUserLike" parameterType="String" resultType="com.wq.pojo.User">
+    <select id="getUserLike" parameterType="String" resultType="BasicSQL.com.wq.pojo.User">
         select * from mybatis.user where name like #{name};
     </select>
 
     <!--防止SQL注入的模糊查询-->
-    <select id="getUserLike2" parameterType="String" resultType="com.wq.pojo.User">
+    <select id="getUserLike2" parameterType="String" resultType="BasicSQL.com.wq.pojo.User">
         select * from mybatis.user where name like "%"#{name}"%";
     </select>
 
