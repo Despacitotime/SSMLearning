@@ -277,5 +277,50 @@ public class UserDaoTest {
         System.out.println(i);
     }
 
+    /**一级缓存测试*/
+    @Test
+    public void testCache1(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        User user = mapper.selectById(1);
+        System.out.println(user);
+
+        System.out.println("============================");
+
+       /* User user1 = new User(3,"4号","12345");
+        int i = mapper.updateUser(user1);*/
+
+        /*手动清除缓存*/
+//        sqlSession.clearCache();
+
+        System.out.println("============================");
+        User user2 = mapper.selectById(1);
+        System.out.println(user2);
+
+        /*对比查询的用户是否相等*/
+//        System.out.println(user==user2);
+        sqlSession.close();
+    }
+
+    /**二级缓存*/
+    @Test
+    public void testCache2(){
+        SqlSession sqlSession1 = MybatisUtils.getSqlSession();
+        SqlSession sqlSession2 = MybatisUtils.getSqlSession();
+
+        UserMapper mapper1 = sqlSession1.getMapper(UserMapper.class);
+        UserMapper mapper2 = sqlSession2.getMapper(UserMapper.class);
+
+        /**注意点，开启二级缓存后调用的方法必须是在.xml文件中的，用注解写的方法不受其控制*/
+        User user1 = mapper1.getUserById(1);
+        System.out.println(user1);
+        sqlSession1.close();
+
+
+        User user2 = mapper2.getUserById(1);
+        System.out.println(user2);
+        sqlSession2.close();
+    }
+
 }
 

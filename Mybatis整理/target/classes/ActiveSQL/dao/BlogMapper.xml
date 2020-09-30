@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--configuration代表核心配置文件-->
+<mapper namespace="ActiveSQL.dao.BlogMapper">
+    <!--SQL片段-->
+    <!--有时会将一些公共的部分抽取以便复用，可以被复用的SQL代码即SQL片段。
+    提取的方式即将复用的代码放到<sql>标签中
+    建议：最好基于单表定义SQL片段；不要提取where标签。-->
+    <sql id="if-title-author">
+        <if test="title != null">
+            title=#{title}
+        </if>
+        <if test="author != null">
+            and author=#{author}
+        </if>
+    </sql>
+
+    <insert id="insertBlog" parameterType="blog">
+        insert into mybatis.blog (id,title,author,create_time,views) values (#{id},#{title},#{author},#{createTime},#{views})
+    </insert>
+
+    <!--原先的写法-->
+<!--    <select id="queryBlogIF1" parameterType="map" resultType="blog">-->
+<!--        select * from mybatis.blog where 1=1-->
+<!--        /*使用if拼接可以实现参数传递和无参传递，没有参数传递就会变成普通的查询*/-->
+<!--        <if test="title != null">-->
+<!--            and title=#{title}-->
+<!--        </if>-->
+<!--        <if test="author != null">-->
+<!--            and author=#{author}-->
+<!--        </if>-->
+<!--    </select>-->
+    <!--加片段的写法-->
+    <select id="queryBlogIF1" parameterType="map" resultType="blog">
+        select * from mybatis.blog where 1=1
+        /*使用if拼接可以实现参数传递和无参传递，没有参数传递就会变成普通的查询*/
+        <where>
+            <include refid="if-title-author"></include>
+        </where>
+    </select>
+
+    <!--加上where解决没有查询条件和查询条件并不是第一个的时候会出现的错误
+    where元素只会在子元素返回任何内容的情况下才插入where子句，且若子句的开头为and或or，where元素会将他们去除-->
+    <select id="queryBlogIF2" parameterType="map" resultType="blog">
+        select * from mybatis.blog
+        <where>
+            <if test="title != null">
+                and title=#{title}
+            </if>
+            <if test="author != null">
+                and author=#{author}
+            </if>
+        </where>
+    </select>
+
+
+    <!--when里面放条件；otherwise是最后的结语，多个when，一个otherwise（otherwise必执行，所以需要选择好）-->
+    <select id="queryBlogChoose" parameterType="map" resultType="blog">
+        select * from mybatis.blog
+        <where>
+            <choose>
+                <when test="title!=null">
+                    title=#{title}
+                </when>
+                <when test="author!=null">
+                    and author=#{author}
+                </when>
+                <otherwise>
+                    and views=#{views}
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <!--用于动态更新语句的类似解决方案叫做 set。set 元素可以用于动态包含需要更新的列，忽略其它不更新的列。
+    这个例子中，set 元素会动态地在行首插入 SET 关键字，并会删掉额外的逗号
+    （这些逗号是在使用条件语句给列赋值时引入的）-->
+    <update id="updateBlog" parameterType="map">
+        update mybatis.blog
+        <set>
+            <if test="title!=null">
+                title=#{title},
+            </if>
+            <if test="author!=null">
+                author=#{author}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!--通过自定义 trim 元素来定制 where 元素的功能
+    prefix为前缀的意思,移除所有 prefixOverrides 属性中指定的内容，并且插入 prefix 属性中指定的内容。
+    前缀和后缀针对不同的符号，比如where要用前缀；“,”要用后缀-->
+<!--    <trim prefix="" prefixOverrides="" suffix="" suffixOverrides=""></trim>-->
+
+    <!--Foreach：允许你指定一个集合，声明可以在元素体内使用的集合项（item）和索引（index）变量。
+    其中open指定开头字符串，close指定结尾字符串以，separator指定集合项迭代之间的分隔符。
+    注意：一般不用下标-->
+<!--    <select id="selectPostIn" resultType="domain.blog.Post">-->
+<!--        SELECT *-->
+<!--        FROM POST P-->
+<!--        WHERE ID in-->
+<!--        <foreach item="id" collection="ids"-->
+<!--                 open="(" separator="or" close=")">-->
+<!--            #{id}-->
+<!--        </foreach>-->
+<!--    </select>-->
+
+    <!--/*目标：select * from blog where 1=1 and (id=1 or id=2 or id=3)*/-->
+    <select id="queryBlogForeach" parameterType="map" resultType="blog">
+        select * from mybatis.blog
+        <where>
+            <foreach collection="ids" item="id" open="(" close=")" separator="or">
+                id=#{id}
+            </foreach>
+
+        </where>
+    </select>
+</mapper>

@@ -1,9 +1,12 @@
 package BasicSQL.pojo;
 
 import org.apache.ibatis.type.Alias;
+
+import java.io.Serializable;
+
 /**若有注解，则别名为其注解值，注解值和方法一一样可以自定义*/
 @Alias("user")
-public class User {
+public class User implements Serializable {
     private int id;
     private String name;
     private String pwd;
