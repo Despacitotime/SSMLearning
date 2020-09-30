@@ -47,11 +47,12 @@
     的情况下，会使用 Bean 的首字母小写的非限定类名来作为它的别名。（注意：实际上大写也可以跑出来）-->
     <typeAliases>
         <!--方法一：手动指定别名-->
-        <typeAlias type="BasicSQL.com.wq.pojo.User" alias="User"/>
+        <typeAlias type="BasicSQL.pojo.User" alias="User"/>
         <!--方法二：统一指定，为Bean本来的名称，但首字母小写（其实大写也可以）-->
-        <package name="BasicSQL.wq.pojo"/>
-        <package name="ComplexSQL.com.wq.oneToMany.pojo"/>
-        <package name="ComplexSQL.com.wq.severalForOne.pojo"/>
+        <package name="BasicSQL.pojo"/>
+        <package name="ComplexSQL.oneToMany.pojo"/>
+        <package name="ComplexSQL.severalForOne.pojo"/>
+        <package name="ActiveSQL.pojo"/>
         <!--方法三：直接给对应实体类加注解（见User类中的示范）-->
     </typeAliases>
 
@@ -105,11 +106,12 @@
 
     <!-- 使用相对于类路径的资源引用 -->
     <mappers>
-        <mapper resource="BasicSQL/com/wq/Dao/UserMapper.xml"/>
+        <mapper resource="BasicSQL/Dao/UserMapper.xml"/>
         <!--注解在接口上实现，需要在核心配置文件中绑定接口，即在mybatis-config.xml文件中加上如下语句:-->
 <!--        <mapper class="BasicSQL.com.wq.Dao.UserMapper"/>-->
         <!--上面两个只要写一个就可以了，不要重复绑定-->
-        <mapper class="ComplexSQL.com.wq.oneToMany.dao.TeacherMapperO"/>
-        <mapper class="ComplexSQL.com.wq.severalForOne.dao.TeacherMapperS"/>
+        <mapper class="ComplexSQL.oneToMany.dao.TeacherMapperO"/>
+        <mapper class="ComplexSQL.severalForOne.dao.TeacherMapperS"/>
+        <mapper class="ActiveSQL.dao.BlogMapper"/>
     </mappers>
 </configuration>

@@ -1,7 +1,7 @@
-package ComplexSQL.com.wq.oneToMany.dao;
+package ComplexSQL.oneToMany.dao;
 
-import ComplexSQL.com.wq.oneToMany.pojo.StudentO;
-import ComplexSQL.com.wq.oneToMany.pojo.TeacherO;
+import ComplexSQL.oneToMany.pojo.StudentO;
+import ComplexSQL.oneToMany.pojo.TeacherO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -2,7 +2,7 @@ package ActiveSQL.pojo;
 import lombok.Data;
 import java.util.Date;
 /**
- * @author 王琪
+ * @author xxx
  * @date 2020/9/29 18:25
  */
 

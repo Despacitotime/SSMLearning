@@ -1,4 +1,4 @@
-package ComplexSQL.com.wq.severalForOne.pojo;
+package ComplexSQL.severalForOne.pojo;
 import lombok.Data;
 
 /**

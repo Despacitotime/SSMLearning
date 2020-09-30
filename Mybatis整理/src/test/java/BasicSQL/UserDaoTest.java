@@ -1,7 +1,7 @@
-package BasicSQL.com.wq;
-import BasicSQL.com.wq.Dao.UserMapper;
-import BasicSQL.com.wq.pojo.User;
-import BasicSQL.com.wq.utils.MybatisUtils;
+package BasicSQL;
+import BasicSQL.Dao.UserMapper;
+import BasicSQL.pojo.User;
+import BasicSQL.utils.MybatisUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;

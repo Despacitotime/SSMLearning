@@ -1,9 +1,9 @@
-package BasicSQL.com.wq;
-import BasicSQL.com.wq.utils.MybatisUtils;
-import ComplexSQL.com.wq.oneToMany.dao.TeacherMapperO;
-import ComplexSQL.com.wq.oneToMany.pojo.TeacherO;
-import ComplexSQL.com.wq.severalForOne.dao.TeacherMapperS;
-import ComplexSQL.com.wq.severalForOne.pojo.TeacherS;
+package BasicSQL;
+import BasicSQL.utils.MybatisUtils;
+import ComplexSQL.oneToMany.dao.TeacherMapperO;
+import ComplexSQL.oneToMany.pojo.TeacherO;
+import ComplexSQL.severalForOne.dao.TeacherMapperS;
+import ComplexSQL.severalForOne.pojo.TeacherS;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 

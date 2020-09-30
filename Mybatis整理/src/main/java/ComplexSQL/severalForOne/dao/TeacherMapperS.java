@@ -1,9 +1,8 @@
-package ComplexSQL.com.wq.severalForOne.dao;
+package ComplexSQL.severalForOne.dao;
 
-import ComplexSQL.com.wq.severalForOne.pojo.StudentS;
-import ComplexSQL.com.wq.severalForOne.pojo.TeacherS;
+import ComplexSQL.severalForOne.pojo.StudentS;
+import ComplexSQL.severalForOne.pojo.TeacherS;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 

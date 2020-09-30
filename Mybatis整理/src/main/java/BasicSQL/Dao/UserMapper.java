@@ -1,5 +1,5 @@
-package BasicSQL.com.wq.Dao;
-import BasicSQL.com.wq.pojo.User;
+package BasicSQL.Dao;
+import BasicSQL.pojo.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

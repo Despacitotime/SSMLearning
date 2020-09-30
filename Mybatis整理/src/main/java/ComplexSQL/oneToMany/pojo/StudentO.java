@@ -1,4 +1,4 @@
-package ComplexSQL.com.wq.oneToMany.pojo;
+package ComplexSQL.oneToMany.pojo;
 import lombok.Data;
 /**
  * @author xxx
