@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--使用Spring来创建对象,在Spring中这些都称为Bean-->
+    <!--该方式使用时，实体类必须存在无参构造（或者无参构造未被覆盖掉）-->
+<!--    <bean id="testDemo" class="IOC.pojo.TestDemo">-->
+<!--        <property name="name" value="Spring"/>-->
+<!--    </bean>-->
+
+
+    <!--不使用无参构造的注入方式-->
+    <!--方法一：通过下标注入-->
+<!--    <bean id="testDemo" class="IOC.pojo.TestDemo">-->
+<!--        <constructor-arg index="0" value="wq"/>-->
+<!--    </bean>-->
+
+    <!--方式二：通过类型注入-->
+    <!--通过类型注入-->
+<!--    <bean id="testDemo" class="IOC.pojo.TestDemo">-->
+<!--        <constructor-arg type="java.lang.String" value="wq"/>-->
+<!--    </bean>-->
+
+
+    <!--方式三：通过参数名注入-->
+    <bean id="testDemo" class="IOC.pojo.TestDemo">
+        <constructor-arg name="name" value="wq"/>
+    </bean>
+
+    <!--用于测试的另一个实体类，只是在创建testDemo的同时，它也会被创建-->
+    <bean id="testDemoT" class="IOC.pojo.TestDemoT"></bean>
+
+    <bean id="user" class="IOC.pojo.User">
+        <property name="name" value="Spring"/>
+    </bean>
+    <!--此处user的别名为newUser-->
+    <!--id：bean的唯一标识符，也就是相当于对象名；class：bean对象所对应的全限定名；
+    name：即别名，且name可以同时取多个别名，name="user2 u2,u3;u4"  间隔符可以为空格、逗号或分号-->
+    <alias name="user" alias="newUser"/>
+
+</beans>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--在java文件中只读取总的beans.xml文件。
+    import一般用于团队开发使用，他可以将多个配置文件导入合并为一个。
+    总的一般命名为：applicationContext.xml-->
+    <import resource="beans.xml"/>
+
+</beans>
