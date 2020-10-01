@@ -24,6 +24,11 @@
             <artifactId>spring-jdbc</artifactId>
             <version>5.2.5.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.4</version>
+        </dependency>
     </dependencies>
 
     <!--静态资源导出，加上他就不会出现无法找到配置文件的问题-->

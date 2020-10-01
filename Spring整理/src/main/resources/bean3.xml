@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--p命名空间要导入的： xmlns:p="http://www.springframework.org/schema/p"-->
+    <!--c命名空间要导入的： xmlns:c="http://www.springframework.org/schema/c"-->
+    <!--p命名空间注入可以直接注入属性值-->
+    <bean id="user" class="IOC.pojo.User" p:name="wq"/>
+
+    <!--c命名空间注入需要有参构造，所以需要同时给实体类加上有参构造和无参构造-->
+    <!--c命名空间注入，通过构造器注入:construct-args-->
+    <bean id="testDemo" class="IOC.pojo.TestDemo" c:name="spring"/>
+</beans>

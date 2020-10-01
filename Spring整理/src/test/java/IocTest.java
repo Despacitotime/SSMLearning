@@ -1,5 +1,6 @@
 import IOC.UserService.impl.UserServiceImpl;
 import IOC.dao.UserDaoImpl;
+import IOC.pojo.People;
 import IOC.pojo.TestDemo;
 import IOC.pojo.User;
 import org.junit.Test;
@@ -50,4 +51,55 @@ public class IocTest {
         User user2 = (User) context.getBean("dfgdf");
         System.out.println(user2);
     }
+
+    /**测试p命名空间*/
+    @Test
+    public void test5(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("bean3.xml");
+        User user = (User) context.getBean("user");
+        System.out.println(user);
+    }
+
+    /**测试c命名空间*/
+    @Test
+    public void test6(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("bean3.xml");
+        TestDemo testDemo = (TestDemo) context.getBean("testDemo");
+        System.out.println(testDemo);
+    }
+
+    /**测试自动装配的环境（普通注入方式）*/
+    @Test
+    public void test7(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        People people = context.getBean("people",People.class);
+        people.getCat().shout();
+        people.getDog().shout();
+    }
+
+    /**注解方式的自动装配*/
+    @Test
+    public void test8(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        People people = context.getBean("people",People.class);
+        people.getCat().shout();
+        people.getDog().shout();
+    }
+
+    /**测试注解注入*/
+    @Test
+    public void test9(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        TestDemo testDemo = (TestDemo) context.getBean("testDemo", TestDemo.class);
+        System.out.println(testDemo);
+    }
+
+    /**测试属性注入*/
+    @Test
+    public void test10(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        TestDemo testDemo = (TestDemo) context.getBean("testDemo", TestDemo.class);
+        System.out.println(testDemo);
+    }
+
 }

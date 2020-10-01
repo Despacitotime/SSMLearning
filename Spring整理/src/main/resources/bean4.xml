@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="cat" class="IOC.pojo.Cat"/>
+    <bean id="dog" class="IOC.pojo.Dog"/>
+    <!--注解方式自动装配-->
+    <bean id="people" class="IOC.pojo.People"/>
+    <context:annotation-config/>
+
+    <!--使用注解开发时，需要在bean.xml文件中指定要扫描的包；且在相应实体类中加上注解@Component-->
+    <!--指定要扫描的包，这个包下的注解就会生效-->
+    <context:component-scan base-package="**.pojo"/>
+
+
+    <!--普通的注入方法-->
+<!--    <bean id="people" class="IOC.pojo.People">-->
+<!--        <property name="name" value="wq"/>-->
+<!--        <property name="cat" ref="cat"/>-->
+<!--        <property name="dog" ref="dog"/>-->
+<!--    </bean>-->
+
+    <!--autowire自动装配方法-->
+    <!--方法一：byName会自动在容器上下文中查找和自己对象set方法后面的值对应的bean的id，
+    如果id=dog改为id=dog2，则无法自动装配
+    注意：byName的时候，需要保证所有的bean的id唯一，且这个bean需要自动注入的属性的set方法的值一致-->
+<!--    <bean id="people" class="IOC.pojo.People" autowire="byName">-->
+<!--        <property name="name" value="wq"/>-->
+<!--    </bean>-->
+
+    <!--方法二：byType会自动在容器上下文中查找和自己对象属性类型相同的bean-->
+    <!--如果有多个同类型的bean则无法装配成功，在byType方式下bean可以没有id（如果没有其他需要用到他的地方）
+    注意：byType的时候，需要保证所有的bean的class唯一，并且把这个bean需要自动注入的属性类型一致-->
+<!--    <bean id="people" class="IOC.pojo.People" autowire="byType">-->
+<!--        <property name="name" value="wq"/>-->
+<!--    </bean>-->
+
+</beans>

@@ -18,13 +18,12 @@ public class TestDemo {
     }
 
     /**可以通过在无参构造中打印字符，或者定义一个有参构造覆盖无参构造的方式来测试输出结果*/
-//    public TestDemo() {
-//        System.out.println("无参构造函数！");
-//    }
+    public TestDemo() {
+        System.out.println("无参构造函数！");
+    }
 
     /**ICO创建对象的方式实质上也是调用了user的构造方法
-     * 故而，实体类的无参构造函数必须存在！如果要定义其他的构造函数，必须同时定义无参构造函数
-     */
+     * 故而，实体类的无参构造函数必须存在！如果要定义其他的构造函数，必须同时定义无参构造函数*/
     public TestDemo(String name) {
         this.name = name;
     }

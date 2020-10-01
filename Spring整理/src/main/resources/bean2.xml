@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--该bean文件主要展示一个类中各种类型的数据集的注入方式-->
+    <bean id="address" class="IOC.pojo.Address"/>
+    <bean id="student" class="IOC.pojo.Student">
+        <!--加注入注解的类中不用set方法，前提是这个自动装配中的属性IOC（Spring）容器中存在，且符合名字byName-->
+        <!--第一种，普通值注入-->
+        <property name="name" value="wq"/>
+        <!--第二种，Bean注入，ref-->
+        <property name="address" ref="address"/>
+        <!--第三种，数组注入，ref-->
+        <property name="books">
+            <array>
+                <value>红楼梦</value>
+                <value>西游记</value>
+                <value>三国演义</value>
+                <value>水浒传</value>
+            </array>
+        </property>
+        <!--list注入，存储类似集合-->
+        <property name="hobbies">
+            <list>
+                <value>听歌</value>
+                <value>敲代码</value>
+                <value>学习</value>
+            </list>
+        </property>
+
+        <!--Set注入，存储类似集合-->
+        <property name="games">
+            <set>
+                <value>LOL</value>
+                <value>COC</value>
+                <value>BOB</value>
+            </set>
+        </property>
+        <!--为null的情况-->
+        <!--<property name="wife" value=""/>-->
+        <property name="wife">
+            <null/>
+        </property>
+
+        <!--Map注入，存储键值对-->
+        <property name="card">
+            <map>
+                <!--entry为实体的意思，里面放键值对-->
+                <entry key="身份证" value="123312432"/>
+                <entry key="学生证" value="34523341325"/>
+            </map>
+        </property>
+
+        <!--properties注入，存储键值对-->
+        <property name="info">
+            <props>
+                <prop key="学号">432542323114</prop>
+                <prop key="性别">男</prop>
+                <prop key="姓名">lll</prop>
+            </props>
+        </property>
+    </bean>
+</beans>
