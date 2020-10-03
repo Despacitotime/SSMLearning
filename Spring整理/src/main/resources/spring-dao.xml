@@ -9,10 +9,10 @@
     <!--DataSource：使用Spring的数据源替换Mybatis的配置 c3p0 dbcp druid
        class使用spring提供的jdbc：org.springframework.jdbc.datasource-->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useSSL=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
         <property name="username" value="admin"/>
-        <property name="password" value="admin"/>
+        <property name="password" value="root"/>
     </bean>
 
     <!--sqlSessionFactory-->
@@ -31,12 +31,12 @@
         <!--只能使用构造器注入参数,因为没有set方法-->
         <constructor-arg index="0" ref="sqlSessionFactory"/>
     </bean>
-    <bean id="userMapper" class="springMyBatis.service.UserMapperImpl">
+    <bean id="userMapper1" class="springMyBatis.service.UserMapperImpl">
         <property name="sqlSession" ref="sqlSession"/>
     </bean>
 
     <!--配置文件中的Session,使用事务-->
-    <bean id="userMapper" class="springMyBatis.service.UserMapperImpl2">
+    <bean id="userMapper2" class="springMyBatis.service.UserMapperImpl2">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 

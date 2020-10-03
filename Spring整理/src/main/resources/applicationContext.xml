@@ -12,6 +12,8 @@
     总的一般命名为：applicationContext.xml-->
     <import resource="beans.xml"/>
     <import resource="bean2.xml"/>
+    <import resource="bean3.xml"/>
+    <import resource="bean4.xml"/>
     <!--DataSource：使用Spring的数据源替换Mybatis的配置 c3p0 dbcp druid
        class使用spring提供的jdbc：org.springframework.jdbc.datasource-->
     <import resource="spring-dao.xml"/>
@@ -19,6 +21,7 @@
     <!--AOP使用的日之类-->
     <bean id="AfterLog" class="AOP.log.AfterLog"/>
     <bean id="log" class="AOP.log.Log"/>
+    <bean id="userService" class="AOP.service.impl.UserServiceImpl"/>
 
     <!--方法一：使用原生Spring API接口-->
     <!--配置aop：需要导入aop的约束-->
