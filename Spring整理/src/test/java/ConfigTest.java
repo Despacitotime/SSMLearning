@@ -38,7 +38,7 @@ public class ConfigTest {
     public void test3() throws IOException {
         /**方法一：通过implements UserMapper 结合SqlSessionTemplate创建*/
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        UserMapper userMapper1 = context.getBean("userMapper", UserMapper.class);
+        UserMapper userMapper1 = context.getBean("userMapper1", UserMapper.class);
         for (User user : userMapper1.selectUser()) {
             System.out.println(user);
         }

@@ -13,6 +13,6 @@
 
     <!--此处为故意制造的错误-->
     <delete id="deleteUser" parameterType="int">
-        deletes from mybatis.user where id=#{id};
+        delete from mybatis.user where id=#{id};
     </delete>
 </mapper>
